@@ -143,7 +143,7 @@ void GlobalVariableParser::parseGlobals(clang::CXXRecordDecl* recordDecl) {
       Expr* init = skipAllImplicitNodes(arg->getInClassInitializer());
 
       auto reportError = [&]() {
-        context_->getDiagnostics().report(init->getLocStart(),
+        context_->getDiagnostics().report(init->getBeginLoc(),
                                           Diagnostics::err_globals_invalid_default_value)
             << init->getType().getAsString() << name;
       };

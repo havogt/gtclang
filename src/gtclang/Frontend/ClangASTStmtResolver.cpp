@@ -67,7 +67,7 @@ void ClangASTStmtResolver::resolve(clang::Stmt* stmt) {
       resolve(s);
     else
       clangASTExprResolver_->getParser()->reportDiagnostic(
-          stmt->getLocStart(), Diagnostics::err_do_method_nested_vertical_region);
+          stmt->getBeginLoc(), Diagnostics::err_do_method_nested_vertical_region);
   } else if(DeclStmt* s = dyn_cast<DeclStmt>(stmt))
     resolve(s);
   else if(DeclRefExpr* s = dyn_cast<DeclRefExpr>(stmt))
@@ -147,7 +147,7 @@ void ClangASTStmtResolver::resolve(clang::IfStmt* stmt) {
   // We currently don't support expression with variable decls in the condition
   if(stmt->getConditionVariable())
     clangASTExprResolver_->getParser()->reportDiagnostic(
-        stmt->getConditionVariable()->getLocStart(),
+        stmt->getConditionVariable()->getBeginLoc(),
         Diagnostics::DiagKind::err_do_method_invalid_expr_if_cond)
         << stmt->getConditionVariable()->getSourceRange();
 
@@ -175,7 +175,7 @@ void ClangASTStmtResolver::resolve(clang::IfStmt* stmt) {
     condStmt = clangASTExprResolver_->resolveExpr(s);
   else {
     clangASTExprResolver_->getParser()->reportDiagnostic(
-        clangCond->getLocStart(), Diagnostics::DiagKind::err_do_method_invalid_expr_if_cond)
+        clangCond->getBeginLoc(), Diagnostics::DiagKind::err_do_method_invalid_expr_if_cond)
         << clangCond->getSourceRange();
   }
 

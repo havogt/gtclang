@@ -34,7 +34,7 @@ extern llvm::StringRef getFilename(llvm::StringRef path);
 /// @ingroup support
 extern clang::FileID createInMemoryFile(llvm::StringRef filename, llvm::MemoryBuffer* source,
                                         clang::SourceManager& sources, clang::FileManager& files,
-                                        clang::vfs::InMemoryFileSystem* memFS);
+                                        llvm::vfs::InMemoryFileSystem* memFS);
 
 } // namespace gtclang
 

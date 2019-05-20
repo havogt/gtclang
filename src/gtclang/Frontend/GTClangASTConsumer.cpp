@@ -184,8 +184,8 @@ void GTClangASTConsumer::HandleTranslationUnit(clang::ASTContext& ASTContext) {
   }
 
   // Create new in-memory FS
-  llvm::IntrusiveRefCntPtr<clang::vfs::InMemoryFileSystem> memFS(
-      new clang::vfs::InMemoryFileSystem);
+  llvm::IntrusiveRefCntPtr<llvm::vfs::InMemoryFileSystem> memFS(
+      new llvm::vfs::InMemoryFileSystem);
   clang::FileManager files(clang::FileSystemOptions(), memFS);
   clang::SourceManager sources(context_->getASTContext().getDiagnostics(), files);
 
@@ -276,7 +276,8 @@ void GTClangASTConsumer::HandleTranslationUnit(clang::ASTContext& ASTContext) {
   // Write file to disk
   DAWN_LOG(INFO) << "Writing file to disk... ";
   std::error_code ec;
-  llvm::sys::fs::OpenFlags flags = llvm::sys::fs::OpenFlags::F_RW;
+  llvm::sys::fs::FileAccess flags = llvm::sys::fs::FileAccess::FA_Read |
+    llvm::sys::fs::FileAccess::FA_Write;
   llvm::raw_fd_ostream fout(generatedFilename, ec, flags);
 
   // Print a header

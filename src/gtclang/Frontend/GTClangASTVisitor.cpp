@@ -78,7 +78,7 @@ bool GTClangASTVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl* recordDecl) {
           auto name = recordDecl->getIdentifier()->getName().str();
 
           DAWN_LOG(INFO) << "Parsing stencil `" << name << "` at "
-                         << getFilename(base.getLocStart().printToString(SM)).str();
+                         << getFilename(base.getBeginLoc().printToString(SM)).str();
 
           stencilParser_.parseStencil(recordDecl, name);
         }
@@ -88,7 +88,7 @@ bool GTClangASTVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl* recordDecl) {
           auto name = recordDecl->getIdentifier()->getName().str();
 
           DAWN_LOG(INFO) << "Parsing stencil function `" << name << "` at "
-                         << getFilename(base.getLocStart().printToString(SM)).str();
+                         << getFilename(base.getBeginLoc().printToString(SM)).str();
 
           stencilParser_.parseStencilFunction(recordDecl, name);
         }

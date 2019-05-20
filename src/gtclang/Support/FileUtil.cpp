@@ -25,7 +25,7 @@ llvm::StringRef getFilename(llvm::StringRef path) {
 
 clang::FileID createInMemoryFile(llvm::StringRef filename, llvm::MemoryBuffer* source,
                                  clang::SourceManager& sources, clang::FileManager& files,
-                                 clang::vfs::InMemoryFileSystem* memFS) {
+                                 llvm::vfs::InMemoryFileSystem* memFS) {
   memFS->addFileNoOwn(filename, 0, source);
   return sources.createFileID(files.getFile(filename), clang::SourceLocation(),
                               clang::SrcMgr::C_User);

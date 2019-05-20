@@ -42,8 +42,8 @@ std::string ClangFormat::format(const std::string& code) {
   std::unique_ptr<llvm::MemoryBuffer> codeBuffer = llvm::MemoryBuffer::getMemBuffer(code);
 
   // Create in-memory FS
-  clang::IntrusiveRefCntPtr<clang::vfs::InMemoryFileSystem> memFS(
-      new clang::vfs::InMemoryFileSystem);
+  clang::IntrusiveRefCntPtr<llvm::vfs::InMemoryFileSystem> memFS(
+      new llvm::vfs::InMemoryFileSystem);
   clang::FileManager files(clang::FileSystemOptions(), memFS);
 
   // Create in-memory file
