@@ -32,9 +32,14 @@ project(gtclang CXX)
 cmake_minimum_required(VERSION 3.3)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
 if(NOT(DEFINED YODA_ROOT))
-  message(FATAL_ERROR "YODA_ROOT not found! Try specifying it in the environment via -DYODA_ROOT=<>")
+  include(FetchContent)
+  FetchContent_Declare(
+    yoda
+    GIT_REPOSITORY https://github.com/MeteoSwiss-APN/yoda.git
+  )
+  FetchContent_Populate(yoda)
+  FetchContent_GetProperties(yoda SOURCE_DIR YODA_ROOT)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${YODA_ROOT}/cmake")

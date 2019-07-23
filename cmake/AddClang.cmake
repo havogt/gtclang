@@ -17,10 +17,10 @@
 include(yodaCheckAndSetCXXFlag)
 include(yodaExportPackage)
 
-set(llvm_clang_version "8.0.0")
-set(llvm_clang_version_short "8.0")
+set(llvm_clang_version "10.0.0")
+set(llvm_clang_version_short "10.0")
 
-find_package(Clang ${llvm_clang_version_short} REQUIRED)
+find_package(Clang ${llvm_clang_version_short} REQUIRED NO_CONFIG)
 
 list(APPEND clang_libraries ${CLANG_LIBS} ${LLVM_LIBS} ${LLVM_SYSTEM_LIBS})
 list(APPEND clang_include_dirs ${CLANG_INCLUDE_DIRS} ${LLVM_INCLUDE_DIRS})
@@ -31,6 +31,7 @@ set(clang_definitions)
 set(GTCLANG_CLANG_RESSOURCE_INCLUDE_PATH ${CLANG_RESSOURCE_INCLUDE_PATH})
 
 # Parse the C++ flags of LLVM/Clang and properly convert them to CMake
+if(DEFINED LLVM_CXXFLAGS)
 string(REPLACE " " ";" llvm_cxx_falgs ${LLVM_CXXFLAGS})
 foreach(flag ${llvm_cxx_falgs})
 
@@ -57,6 +58,7 @@ foreach(flag ${llvm_cxx_falgs})
     continue()
   endif()
 endforeach()
+endif()
 
 yoda_export_package(
   NAME Clang

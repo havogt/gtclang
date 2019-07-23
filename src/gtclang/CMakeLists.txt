@@ -44,3 +44,5 @@ yoda_add_executable(
   OUTPUT_DIR ${CMAKE_BINARY_DIR}/bin
   INSTALL_DESTINATION ${GTCLANG_INSTALL_BIN_DIR}
 )
+target_link_libraries(gtclang clangToolingInclusions)
+
