@@ -14,15 +14,35 @@
 //
 //===------------------------------------------------------------------------------------------===//
 
-#include "clang/AST/ASTFwd.h"
-#include "clang/AST/ExprCXX.h"
+#ifndef GTCLANG_SUPPORT_CLANGCOMPAT_VIRTUALFILESYSTEM_H
+#define GTCLANG_SUPPORT_CLANGCOMPAT_VIRTUALFILESYSTEM_H
 
-#include "gtclang/Support/ASTUtils.h"
+#include "clang/Basic/Version.h"
+
+#if CLANG_VERSION_MAJOR < 8
+#include "clang/Basic/VirtualFileSystem.h"
+#else
+#include "llvm/Support/VirtualFileSystem.h"
+#endif
 
 namespace gtclang {
+namespace clang_compat {
+#if CLANG_VERSION_MAJOR < 8
 
-std::string getClassNameFromConstructExpr(clang::CXXConstructExpr* expr) {
-  clang::CXXRecordDecl* recDecl = expr->getConstructor()->getParent();
-  return recDecl->getNameAsString();
+namespace llvm {
+namespace vfs {
+using InMemoryFileSystem = ::clang::vfs::InMemoryFileSystem;
 }
+} // namespace llvm
+#else
+namespace llvm {
+namespace vfs {
+using InMemoryFileSystem = ::llvm::vfs::InMemoryFileSystem;
+}
+} // namespace llvm
+#endif
+
+} // namespace clang_compat
 } // namespace gtclang
+
+#endif
